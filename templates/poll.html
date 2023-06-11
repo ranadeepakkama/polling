@@ -1,0 +1,81 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/indx.css' %}" />
+    <script src="https://kit.fontawesome.com/031117bc28.js" crossorigin="anonymous"></script>
+    <title>Poll Home Page </title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div style="width: 100%; display: flex;flex-direction: row; justify-content: space-between;margin: 0.8em;"> 
+          <div style="display: block;">
+            <a class="navbar-brand " href="{% url 'home' %}"><i class="fa-solid fa-house" style="color: #0056d6;padding: 9px; font-size: 1.4em;"></i></a>
+          </div>
+          <div style="display: block;justify-content: end;">
+            <a href="{% url 'user' %}"><i class="fa-solid fa-user" style="padding: 9px; font-size: 1.4em;"></i></a>
+            <a class="navbar-brand" href="{% url 'poll' %}" > Polls</a> 
+            <a href="{% url 'logout'%}" class="navbar-brand "> Logout</a>
+          </div>
+        </div>
+      </nav>
+
+    <div class="cart" style="margin: 30px; padding: 7px;">
+        <h2 style="text-align: center;margin: 6%; padding-top: 4px;">welcome to Polls List</h2>
+        <div style=" margin-left: 15%; width: 65vw;height: 18vh; display: flex; flex-direction: column;justify-content: flex-start;"> 
+            <div style="display:flex; justify-content: space-between;padding: 4px;">
+                <a href="{% url 'poll'%}"><button class="btn btn-primary">Events</button></a>
+                <a href="{% url 'create' %}"><button class="btn btn-primary">Add+</button></a>
+            </div>
+            <form action="{% url 'search' %}" method="GET">
+                <div style="margin-top: 6%;">
+                    <input name = 'q' type="search" style="border:solid black 1px; margin: 3px;">
+                    <button type="submit" class="btn btn-primary" style="height: 4.5vh;">Search</button>
+                </div>
+            </form>
+        </div>
+        <div style="margin-left: 7em;">
+            <h4 style="padding-bottom: 5px;">Available Polls</h4>
+            {% for item in data %}
+                <ul>
+                    <div style = 'display: flex; flex-direction: row; justify-content: space-between;width: 64vw;'>
+                        <li>{{item.question}}</li>
+                        <div>
+                            <a href="{% url 'vote' item.id%}"><button class="btn btn-outline-primary">Vote</button></a>
+                            <a href="{% url 'delete' item.id%}"><button class="btn btn-outline-danger">Delete</button></a>
+                        </div>
+                    </div>
+                </ul>
+            {%endfor%}
+        </div>
+        <div style="margin-left: 7em;">
+            {%if filter_data%}
+            <ul>
+                {%for item in filter_data%}
+                <div style = 'display: flex; flex-direction: row; justify-content: space-between;width: 64vw;'>
+                    <li>{{item.question}}</li>
+                    <div>
+                        <a href="{% url 'vote' item.id %}"><button class="btn btn-outline-primary">Vote</button></a>
+                        <a href="{% url 'delete' item.id %}"><button class="btn btn-outline-danger">Delete</button></a>
+                    </div>
+                </div>
+                {%endfor%}
+            </ul>   
+            {%else%}
+                <hr/>
+                <p>No Data is Available / search</p>
+            {%endif%}
+        </div> 
+    </div>
+    <div style="display: flex; justify-content:end;" class="bg-body-tertiary">
+        <div style="display: flex; justify-content: space-between;width: 8.4%; margin-right: 28px;">
+          <a href="https://www.instagram.com/?next=https%3A%2F%2Fwww.instagram.com%2F%3Fnext%3Dhttps%253A%252F%252Fwww.instagram.com%252F" class="icons"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://twitter.com"class="icons"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+      </div>
+</body>
+</html>
